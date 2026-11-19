@@ -16,6 +16,7 @@
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+html, body { overflow-x: hidden; }
 body { font-family: var(--sans); font-weight: 300; color: var(--texto); background: var(--creme); line-height: 1.7; }
 a { color: var(--verde-esc); }
 img { max-width: 100%; display: block; }
