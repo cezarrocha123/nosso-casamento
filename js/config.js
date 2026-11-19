@@ -2,10 +2,10 @@
    CONFIGURAÇÃO DO SITE — edite só este arquivo
    ========================================================= */
 window.CONFIG = {
-  noivo1: "Noivo",
-  noivo2: "Noiva",
+  noivo1: "Cezar",
+  noivo2: "Liriel",
   // Data e hora da cerimônia (formato AAAA-MM-DDTHH:MM, horário local)
-  data: "2027-05-15T16:00",
+  data: "2027-11-06T16:00",
   cidade: "Natal / RN",
   // Foto de capa (coloque o arquivo na pasta img/). Deixe "" para usar o fundo padrão.
   fotoCapa: "",
