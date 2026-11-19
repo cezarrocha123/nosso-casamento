@@ -1,0 +1,9 @@
+{
+  "urlPlanilha": "https://script.google.com/macros/s/SEU_ID/exec",
+  "token": "MESMO_TOKEN_DO_APPS_SCRIPT",
+  "intervaloSegundos": 30,
+  "avisar": [
+    { "nome": "Cezar", "numero": "5584987422956" },
+    { "nome": "Liriel", "numero": "5584988121045" }
+  ]
+}

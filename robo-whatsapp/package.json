@@ -1,0 +1,19 @@
+{
+  "name": "robo-whatsapp-casamento",
+  "version": "1.0.0",
+  "description": "Avisa no WhatsApp dos noivos cada confirmação de presença do site",
+  "main": "robo.js",
+  "private": true,
+  "scripts": {
+    "start": "node robo.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.9",
+    "pino": "^9.0.0",
+    "qrcode": "^1.5.4",
+    "qrcode-terminal": "^0.12.0"
+  }
+}

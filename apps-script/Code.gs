@@ -17,11 +17,15 @@ const AVISAR_WHATSAPP = [
   // { numero: "5584987422956", apikey: "COLE_A_CHAVE_DO_CEZAR" },
 ];
 
+/* Senha que o robô do WhatsApp (no seu PC) usa para ler as confirmações novas.
+ * Use a mesma no arquivo config.json do robô. Não publique no GitHub. */
+const TOKEN_ROBO = "COLE_O_TOKEN_DO_ROBO";
+
 /* ID da planilha (o código entre /d/ e /edit no endereço). Deixe "" se o script foi criado pelo menu Extensões da planilha. */
 const PLANILHA_ID = "";
 
 const ABAS = {
-  rsvp:     ["Data", "Nome", "Presença", "Acompanhantes", "Total de pessoas"],
+  rsvp:     ["Data", "Nome", "Presença", "Acompanhantes", "Total de pessoas", "Avisado no WhatsApp"],
   recado:   ["Data", "Nome", "Recado", "Aprovado"],
   presente: ["Data", "Nome", "Presente", "Valor", "Mensagem"],
 };
@@ -35,6 +39,8 @@ function aba_(tipo) {
     sh.appendRow(ABAS[tipo]);
     sh.getRange(1, 1, 1, ABAS[tipo].length).setFontWeight("bold");
     sh.setFrozenRows(1);
+  } else if (sh.getLastColumn() < ABAS[tipo].length) {
+    sh.getRange(1, 1, 1, ABAS[tipo].length).setValues([ABAS[tipo]]).setFontWeight("bold");
   }
   return sh;
 }
@@ -105,8 +111,36 @@ function doPost(e) {
   return json_({ ok: true });
 }
 
+function totalPessoas_() {
+  return aba_("rsvp").getDataRange().getValues().slice(1)
+    .reduce(function (t, r) { return t + (Number(r[4]) || 0); }, 0);
+}
+
 function doGet(e) {
-  if (e.parameter.acao === "recados") {
+  const acao = e.parameter.acao;
+
+  // ---- usado pelo robô do WhatsApp ----
+  if (acao === "pendentes" || acao === "marcar") {
+    if (!TOKEN_ROBO || TOKEN_ROBO.indexOf("COLE_") === 0 || e.parameter.token !== TOKEN_ROBO) {
+      return json_({ ok: false, erro: "token inválido" });
+    }
+    const sh = aba_("rsvp");
+    if (acao === "marcar") {
+      const linhas = String(e.parameter.linhas || "").split(",").map(Number).filter(function (n) { return n >= 2; });
+      linhas.forEach(function (n) { sh.getRange(n, 6).setValue(new Date()); });
+      return json_({ ok: true, marcadas: linhas.length });
+    }
+    const valores = sh.getDataRange().getValues();
+    const pendentes = [];
+    for (let i = 1; i < valores.length; i++) {
+      const r = valores[i];
+      if (!r[1] || r[5]) continue; // sem nome ou já avisado
+      pendentes.push({ linha: i + 1, nome: r[1], presenca: r[2], acompanhantes: Number(r[3]) || 0 });
+    }
+    return json_({ ok: true, total: totalPessoas_(), pendentes: pendentes });
+  }
+
+  if (acao === "recados") {
     const valores = aba_("recado").getDataRange().getValues().slice(1);
     const lista = valores
       .filter(r => String(r[3]).toUpperCase() !== "NÃO" && String(r[3]).toUpperCase() !== "NAO")

@@ -1,0 +1,38 @@
+ROBÔ DO WHATSAPP — CASAMENTO CEZAR & LIRIEL
+============================================
+
+O que ele faz
+-------------
+Fica ligado no seu PC. A cada 30 segundos olha a planilha de confirmações e manda
+cada confirmação nova no WhatsApp do Cezar e da Liriel. O convidado não faz nada além
+de confirmar no site.
+
+Instalar (só uma vez)
+---------------------
+1. Instale o Node.js (versão LTS): https://nodejs.org  -> Next, Next, Concluir.
+2. Descompacte esta pasta num lugar fixo, ex.: C:\robo-whatsapp
+3. Dê dois cliques em  iniciar.bat
+   - Na primeira vez ele instala o que precisa (1-2 minutos).
+4. Vai aparecer um QR Code (na janela e numa imagem).
+   No celular que vai ser o ROBÔ: WhatsApp > Aparelhos conectados > Conectar um aparelho
+   e escaneie.
+5. Pronto: aparece "✅ Conectado ao WhatsApp!". Deixe a janela aberta (pode minimizar).
+
+Qual WhatsApp usar como robô?
+-----------------------------
+O ideal é um chip separado (as mensagens saem desse número para vocês dois).
+Se usar o seu próprio número, as mensagens para você aparecem na conversa "Você"
+(mensagem para si mesmo) e a Liriel recebe como se fosse você mandando.
+Robôs não oficiais podem ser bloqueados pelo WhatsApp; com poucas mensagens o risco
+é baixo, mas por isso o chip separado é mais seguro.
+
+Ligar sozinho quando o PC ligar
+-------------------------------
+Aperte Windows+R, digite  shell:startup  e Enter.
+Na pasta que abrir, crie um atalho para o iniciar.bat.
+
+Problemas
+---------
+- "token inválido": o token do config.json tem que ser igual ao TOKEN_ROBO do Apps Script.
+- O WhatsApp desconectou: apague a pasta  sessao-whatsapp  e abra o iniciar.bat de novo.
+- Trocar quem recebe: edite  config.json  (números com 55 + DDD) e reinicie o robô.
