@@ -1,0 +1,42 @@
+name: Montar robô do WhatsApp (Windows)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "robo-whatsapp/**"
+      - ".github/workflows/robo-windows.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  montar:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Instalar dependências
+        working-directory: robo-whatsapp
+        run: npm install --no-audit --no-fund --omit=dev
+
+      - name: Conferir que carrega
+        working-directory: robo-whatsapp
+        run: node -e "require('@whiskeysockets/baileys'); require('pino'); require('qrcode'); require('qrcode-terminal'); console.log('ok')"
+
+      - name: Compactar
+        shell: pwsh
+        run: Compress-Archive -Path robo-whatsapp -DestinationPath robo-whatsapp-windows.zip
+
+      - name: Publicar no Release "robo"
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release view robo >/dev/null 2>&1 || gh release create robo --title "Robô do WhatsApp (pronto para Windows)" --notes "Baixe robo-whatsapp-windows.zip, descompacte e coloque seu config.json na pasta robo-whatsapp."
+          gh release upload robo robo-whatsapp-windows.zip --clobber
