@@ -1,8 +1,25 @@
 /**
  * Backend gratuito do site de casamento (Google Planilhas + Apps Script)
- * Salva confirmações de presença, recados e avisos de presente.
+ * - Salva confirmações de presença, recados e avisos de presente na planilha
+ * - Avisa automaticamente no WhatsApp (via CallMeBot, grátis)
+ *
  * Instalação: veja o README.md, passo "Ligar a planilha".
  */
+
+/* ======== AVISOS NO WHATSAPP ========
+ * Cada pessoa que vai receber os avisos precisa ativar o CallMeBot no próprio WhatsApp
+ * e colar aqui o número (com 55 + DDD) e a chave (apikey) que o robô respondeu.
+ * Pode deixar uma ou mais pessoas. Para desligar, deixe a lista vazia: [].
+ * IMPORTANTE: cole a chave só aqui no Apps Script, nunca no GitHub.
+ */
+const AVISAR_WHATSAPP = [
+  // { numero: "5584988121045", apikey: "COLE_A_CHAVE_DA_LIRIEL" },
+  // { numero: "5584987422956", apikey: "COLE_A_CHAVE_DO_CEZAR" },
+];
+
+/* ID da planilha (o código entre /d/ e /edit no endereço). Deixe "" se o script foi criado pelo menu Extensões da planilha. */
+const PLANILHA_ID = "";
+
 const ABAS = {
   rsvp:     ["Data", "Nome", "WhatsApp", "Presença", "Acompanhantes", "Nomes acompanhantes", "Restrição alimentar", "Mensagem"],
   recado:   ["Data", "Nome", "Recado", "Aprovado"],
@@ -10,7 +27,7 @@ const ABAS = {
 };
 
 function aba_(tipo) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = PLANILHA_ID ? SpreadsheetApp.openById(PLANILHA_ID) : SpreadsheetApp.getActiveSpreadsheet();
   const nome = { rsvp: "Confirmações", recado: "Recados", presente: "Presentes" }[tipo];
   let sh = ss.getSheetByName(nome);
   if (!sh) {
@@ -26,26 +43,69 @@ function limpa_(v, max) {
   return String(v == null ? "" : v).replace(/^[=+\-@]/, "'$&").slice(0, max || 500);
 }
 
+/* Envia um texto para todos os números configurados em AVISAR_WHATSAPP */
+function avisarWhatsApp_(texto) {
+  AVISAR_WHATSAPP.forEach(function (p) {
+    if (!p.numero || !p.apikey || p.apikey.indexOf("COLE_") === 0) return;
+    try {
+      const url = "https://api.callmebot.com/whatsapp.php?phone=" + encodeURIComponent("+" + p.numero) +
+        "&apikey=" + encodeURIComponent(p.apikey) + "&text=" + encodeURIComponent(texto);
+      UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+    } catch (err) {
+      console.error("Falha ao avisar " + p.numero + ": " + err);
+    }
+  });
+}
+
+function textoRSVP_(d) {
+  const linhas = [
+    "*Nova confirmação de presença* 💍",
+    "",
+    "Nome: " + d.nome,
+    "WhatsApp: " + d.telefone,
+    "Vai ao casamento? " + (d.presenca === "Sim" ? "Sim ✅" : "Não ❌"),
+  ];
+  if (d.presenca === "Sim") {
+    linhas.push("Acompanhantes: " + (Number(d.acompanhantes) || 0) + (d.nomesAcompanhantes ? " (" + d.nomesAcompanhantes + ")" : ""));
+    if (d.restricao) linhas.push("Restrição alimentar: " + d.restricao);
+  }
+  if (d.mensagem) linhas.push("", "Mensagem: " + d.mensagem);
+  // Total de confirmados até agora
+  try {
+    const dados = aba_("rsvp").getDataRange().getValues().slice(1);
+    let pessoas = 0;
+    dados.forEach(function (r) { if (r[3] === "Sim") pessoas += 1 + (Number(r[4]) || 0); });
+    linhas.push("", "Total confirmado até agora: " + pessoas + " pessoa(s)");
+  } catch (e) {}
+  return linhas.join("\n");
+}
+
 function doPost(e) {
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);
+  let aviso = null;
   try {
     const d = JSON.parse(e.postData.contents);
     const agora = new Date();
     if (d.tipo === "rsvp") {
       aba_("rsvp").appendRow([agora, limpa_(d.nome, 120), limpa_(d.telefone, 30), limpa_(d.presenca, 5),
         Number(d.acompanhantes) || 0, limpa_(d.nomesAcompanhantes), limpa_(d.restricao), limpa_(d.mensagem)]);
+      aviso = textoRSVP_(d);
     } else if (d.tipo === "recado") {
       aba_("recado").appendRow([agora, limpa_(d.nome, 80), limpa_(d.mensagem, 600), "SIM"]);
     } else if (d.tipo === "presente") {
       aba_("presente").appendRow([agora, limpa_(d.nome, 80), limpa_(d.presente, 120), Number(d.valor) || 0, limpa_(d.mensagem)]);
+      aviso = "*Presente avisado* 🎁\n\n" + d.nome + " disse que enviou: " + d.presente +
+        " (R$ " + (Number(d.valor) || 0).toFixed(2).replace(".", ",") + ")" +
+        (d.mensagem ? "\n\nMensagem: " + d.mensagem : "") + "\n\nConfira no app do banco.";
     }
-    return json_({ ok: true });
   } catch (err) {
     return json_({ ok: false, erro: String(err) });
   } finally {
     lock.releaseLock();
   }
+  if (aviso) avisarWhatsApp_(aviso);
+  return json_({ ok: true });
 }
 
 function doGet(e) {
@@ -63,4 +123,9 @@ function doGet(e) {
 
 function json_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+/* Rode esta função no editor (botão ▶ Executar) para testar o aviso no WhatsApp */
+function testarWhatsApp() {
+  avisarWhatsApp_("Teste do site de casamento ✅ Se chegou, os avisos automáticos estão funcionando!");
 }

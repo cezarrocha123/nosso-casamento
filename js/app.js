@@ -80,6 +80,11 @@
   const dadosForm = (f) => Object.fromEntries(new FormData(f).entries());
 
   /* ---------- RSVP ---------- */
+  if (C.appsScriptUrl) {
+    const b = $("#formRSVP button[type=submit]");
+    b.textContent = "Confirmar presença"; b.classList.remove("btn-wpp");
+    b.nextElementSibling.textContent = "Sua confirmação chega direto para os noivos.";
+  }
   const sel = $("#selAcomp");
   for (let i = 0; i <= C.maxAcompanhantes; i++) sel.innerHTML += `<option value="${i}">${i === 0 ? "Só eu" : "+ " + i}</option>`;
   const fR = $("#formRSVP");
@@ -109,9 +114,21 @@
     if (d.mensagem) linhas.push(``, `Mensagem: ${d.mensagem}`);
     const linkWpp = `https://wa.me/${C.whatsappRSVP}?text=${encodeURIComponent(linhas.join("\n"))}`;
 
-    // Abre o WhatsApp (e, se houver planilha configurada, também salva lá)
+    // Modo automático: salva na planilha e a planilha avisa os noivos no WhatsApp
+    if (C.appsScriptUrl) {
+      const btn = fR.querySelector("button[type=submit]");
+      btn.disabled = true; btn.textContent = "Enviando…";
+      if (await enviar("rsvp", d, st)) {
+        fR.innerHTML = `<div class="obrigado">
+          <h3>${d.presenca === "Sim" ? "Presença confirmada! 🎉" : "Obrigado por avisar 💛"}</h3>
+          <p>${d.presenca === "Sim" ? "Recebemos sua confirmação. Mal podemos esperar para celebrar com você!" : "Recebemos sua resposta. Sentiremos sua falta!"}</p>
+        </div>`;
+      } else { btn.disabled = false; btn.textContent = "Confirmar presença"; }
+      return;
+    }
+
+    // Sem planilha: abre o WhatsApp com a mensagem pronta
     if (C.whatsappRSVP) window.open(linkWpp, "_blank", "noopener");
-    if (C.appsScriptUrl) await enviar("rsvp", d, st);
 
     fR.innerHTML = `<div class="obrigado">
       <h3>${d.presenca === "Sim" ? "Quase lá! 🎉" : "Obrigado por avisar 💛"}</h3>
