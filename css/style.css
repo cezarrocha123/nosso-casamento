@@ -109,7 +109,9 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--verde); out
 .form-status { font-size: .9rem; min-height: 1em; }
 .form-status.ok { color: var(--verde); }
 .form-status.erro { color: #b4553f; }
-.obrigado { text-align: center; padding: 20px 0; }
+.obrigado { text-align: center; padding: 20px 0; display: grid; gap: 10px; justify-items: center; }
+.btn-wpp { background: #25a35a; border-color: #25a35a; margin-top: 6px; }
+.btn-wpp:hover { background: #1e8a4c; border-color: #1e8a4c; }
 
 /* Presentes */
 .gifts { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }

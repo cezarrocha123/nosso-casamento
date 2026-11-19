@@ -93,10 +93,32 @@
     if (!fR.checkValidity()) { st.textContent = "Preencha nome, WhatsApp e se você vai."; st.className = "form-status erro"; return; }
     const d = dadosForm(fR);
     if (d.presenca === "Não") { d.acompanhantes = 0; d.nomesAcompanhantes = ""; d.restricao = ""; }
-    if (await enviar("rsvp", d, st)) {
-      fR.innerHTML = `<div class="obrigado"><h3>${d.presenca === "Sim" ? "Oba! Presença confirmada 🎉" : "Obrigado por avisar 💛"}</h3>
-        <p>${d.presenca === "Sim" ? "Mal podemos esperar para celebrar com você." : "Sentiremos sua falta!"}</p></div>`;
+
+    // Mensagem para o WhatsApp
+    const linhas = [
+      `*Confirmação de presença — ${C.noivo1} & ${C.noivo2}*`,
+      ``,
+      `Nome: ${d.nome}`,
+      `WhatsApp: ${d.telefone}`,
+      `Vai ao casamento? ${d.presenca === "Sim" ? "Sim ✅" : "Não ❌"}`,
+    ];
+    if (d.presenca === "Sim") {
+      linhas.push(`Acompanhantes: ${Number(d.acompanhantes) || 0}${d.nomesAcompanhantes ? " (" + d.nomesAcompanhantes + ")" : ""}`);
+      if (d.restricao) linhas.push(`Restrição alimentar: ${d.restricao}`);
     }
+    if (d.mensagem) linhas.push(``, `Mensagem: ${d.mensagem}`);
+    const linkWpp = `https://wa.me/${C.whatsappRSVP}?text=${encodeURIComponent(linhas.join("\n"))}`;
+
+    // Abre o WhatsApp (e, se houver planilha configurada, também salva lá)
+    if (C.whatsappRSVP) window.open(linkWpp, "_blank", "noopener");
+    if (C.appsScriptUrl) await enviar("rsvp", d, st);
+
+    fR.innerHTML = `<div class="obrigado">
+      <h3>${d.presenca === "Sim" ? "Quase lá! 🎉" : "Obrigado por avisar 💛"}</h3>
+      <p>Para concluir, envie a mensagem que abriu no WhatsApp da ${esc(C.whatsappRSVPNome || "noiva")}.</p>
+      <p class="small">Se o WhatsApp não abriu, toque no botão abaixo:</p>
+      <a class="btn btn-wpp" href="${linkWpp}" target="_blank" rel="noopener">Enviar pelo WhatsApp</a>
+    </div>`;
   });
 
   /* ---------- Presentes / PIX ---------- */
