@@ -79,6 +79,27 @@
   }
   const dadosForm = (f) => Object.fromEntries(new FormData(f).entries());
 
+  /* ---------- Salvar na agenda ---------- */
+  function linksAgenda() {
+    const inicio = new Date(C.data);
+    const fim = new Date(inicio.getTime() + (Number(C.duracaoHoras) || 7) * 3600 * 1000);
+    const utc = (dt) => dt.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    const titulo = `Casamento ${C.noivo1} & ${C.noivo2} 💍`;
+    const local = `${C.cerimonia.nome} - ${C.cerimonia.endereco}`;
+    const detalhes = `Cerimônia: ${C.cerimonia.nome} (${C.cerimonia.horario})\n${C.cerimonia.endereco}\n\n` +
+      `Festa: ${C.festa.nome} (${C.festa.horario})\n${C.festa.endereco}\n\nSite: ${location.origin + location.pathname}`;
+    const google = "https://calendar.google.com/calendar/render?" + new URLSearchParams({
+      action: "TEMPLATE", text: titulo, dates: `${utc(inicio)}/${utc(fim)}`, details: detalhes, location: local,
+    });
+    const icsEsc = (t) => t.replace(/[\\,;]/g, (m) => "\\" + m).replace(/\n/g, "\\n");
+    const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Casamento//PT-BR", "BEGIN:VEVENT",
+      `UID:casamento-${utc(inicio)}@site`, `DTSTAMP:${utc(new Date())}`, `DTSTART:${utc(inicio)}`, `DTEND:${utc(fim)}`,
+      `SUMMARY:${icsEsc(titulo)}`, `LOCATION:${icsEsc(local)}`, `DESCRIPTION:${icsEsc(detalhes)}`,
+      "BEGIN:VALARM", "TRIGGER:-P1D", "ACTION:DISPLAY", "DESCRIPTION:Amanhã é o casamento!", "END:VALARM",
+      "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+    return { google, ics: "data:text/calendar;charset=utf-8," + encodeURIComponent(ics) };
+  }
+
   /* ---------- RSVP (simples: nome + vai/não vai + acompanhantes) ---------- */
   const sel = $("#selAcomp");
   for (let i = 0; i <= C.maxAcompanhantes; i++) sel.innerHTML += `<option value="${i}">${i === 0 ? "Só eu" : "+ " + i}</option>`;
@@ -98,6 +119,9 @@
       fR.innerHTML = `<div class="obrigado">
         <h3>${d.presenca === "Sim" ? "Presença confirmada! 🎉" : "Obrigado por avisar 💛"}</h3>
         <p>${d.presenca === "Sim" ? "Mal podemos esperar para celebrar com você!" : "Sentiremos sua falta!"}</p>
+        ${d.presenca === "Sim" ? (() => { const a = linksAgenda(); return `
+        <a class="btn btn-agenda" href="${a.google}" target="_blank" rel="noopener">📅 Salvar no Google Agenda</a>
+        <a class="small link-ics" href="${a.ics}" download="casamento-${C.noivo1}-${C.noivo2}.ics">Usa iPhone ou Outlook? Baixar para outra agenda</a>`; })() : ""}
       </div>`;
     } else { btn.disabled = false; btn.textContent = "Confirmar presença"; }
   });

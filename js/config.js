@@ -4,9 +4,11 @@
 window.CONFIG = {
   noivo1: "Cezar",
   noivo2: "Liriel",
-  // Data e hora da cerimônia (formato AAAA-MM-DDTHH:MM, horário local)
-  data: "2027-11-06T16:00",
+  // Data e hora da cerimônia no horário de Natal (o -03:00 no fim é o fuso; não apague)
+  data: "2027-11-06T16:00-03:00",
   cidade: "Natal / RN",
+  // Duração do evento na agenda dos convidados (horas, contando cerimônia + festa)
+  duracaoHoras: 7,
   // Foto de capa (coloque o arquivo na pasta img/). Deixe "" para usar o fundo padrão.
   fotoCapa: "",
 

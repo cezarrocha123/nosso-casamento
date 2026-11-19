@@ -111,6 +111,8 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--verde); out
 .form-status.ok { color: var(--verde); }
 .form-status.erro { color: #b4553f; }
 .obrigado { text-align: center; padding: 20px 0; display: grid; gap: 10px; justify-items: center; }
+.btn-agenda { margin-top: 8px; }
+.link-ics { color: var(--suave); text-decoration: underline; }
 .btn-wpp { background: #25a35a; border-color: #25a35a; margin-top: 6px; }
 .btn-wpp:hover { background: #1e8a4c; border-color: #1e8a4c; }
 
