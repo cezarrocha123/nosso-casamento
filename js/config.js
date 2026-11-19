@@ -41,10 +41,6 @@ window.CONFIG = {
 
   // Prazo para confirmar presença (texto livre)
   prazoRSVP: "15 de abril de 2027",
-  // As confirmações de presença são enviadas para este WhatsApp (DDI + DDD + número, só dígitos)
-  // TESTE: número do Cezar. Para valer, voltar para "5584988121045" / "Liriel"
-  whatsappRSVP: "5584987422956",
-  whatsappRSVPNome: "Cezar",
   maxAcompanhantes: 4,
 
   // URL do Google Apps Script (veja o README). Sem ela, o formulário fica em modo de teste.

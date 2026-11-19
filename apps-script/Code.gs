@@ -21,7 +21,7 @@ const AVISAR_WHATSAPP = [
 const PLANILHA_ID = "";
 
 const ABAS = {
-  rsvp:     ["Data", "Nome", "WhatsApp", "Presença", "Acompanhantes", "Nomes acompanhantes", "Restrição alimentar", "Mensagem"],
+  rsvp:     ["Data", "Nome", "Presença", "Acompanhantes", "Total de pessoas"],
   recado:   ["Data", "Nome", "Recado", "Aprovado"],
   presente: ["Data", "Nome", "Presente", "Valor", "Mensagem"],
 };
@@ -62,19 +62,16 @@ function textoRSVP_(d) {
     "*Nova confirmação de presença* 💍",
     "",
     "Nome: " + d.nome,
-    "WhatsApp: " + d.telefone,
     "Vai ao casamento? " + (d.presenca === "Sim" ? "Sim ✅" : "Não ❌"),
   ];
   if (d.presenca === "Sim") {
-    linhas.push("Acompanhantes: " + (Number(d.acompanhantes) || 0) + (d.nomesAcompanhantes ? " (" + d.nomesAcompanhantes + ")" : ""));
-    if (d.restricao) linhas.push("Restrição alimentar: " + d.restricao);
+    linhas.push("Acompanhantes: " + (Number(d.acompanhantes) || 0));
   }
-  if (d.mensagem) linhas.push("", "Mensagem: " + d.mensagem);
   // Total de confirmados até agora
   try {
     const dados = aba_("rsvp").getDataRange().getValues().slice(1);
     let pessoas = 0;
-    dados.forEach(function (r) { if (r[3] === "Sim") pessoas += 1 + (Number(r[4]) || 0); });
+    dados.forEach(function (r) { pessoas += Number(r[4]) || 0; });
     linhas.push("", "Total confirmado até agora: " + pessoas + " pessoa(s)");
   } catch (e) {}
   return linhas.join("\n");
@@ -88,8 +85,8 @@ function doPost(e) {
     const d = JSON.parse(e.postData.contents);
     const agora = new Date();
     if (d.tipo === "rsvp") {
-      aba_("rsvp").appendRow([agora, limpa_(d.nome, 120), limpa_(d.telefone, 30), limpa_(d.presenca, 5),
-        Number(d.acompanhantes) || 0, limpa_(d.nomesAcompanhantes), limpa_(d.restricao), limpa_(d.mensagem)]);
+      const acomp = d.presenca === "Sim" ? (Number(d.acompanhantes) || 0) : 0;
+      aba_("rsvp").appendRow([agora, limpa_(d.nome, 120), limpa_(d.presenca, 5), acomp, d.presenca === "Sim" ? 1 + acomp : 0]);
       aviso = textoRSVP_(d);
     } else if (d.tipo === "recado") {
       aba_("recado").appendRow([agora, limpa_(d.nome, 80), limpa_(d.mensagem, 600), "SIM"]);

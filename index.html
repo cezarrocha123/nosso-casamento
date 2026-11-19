@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -77,25 +77,16 @@
     <p class="lead">Por favor, confirme até <b id="prazo"></b>.</p>
 
     <form class="form card" id="formRSVP" novalidate>
-      <div class="grid-2">
-        <label>Nome completo*<input name="nome" required autocomplete="name"></label>
-        <label>WhatsApp*<input name="telefone" required inputmode="tel" placeholder="(84) 9 0000-0000" autocomplete="tel"></label>
-      </div>
+      <label>Seu nome*<input name="nome" required autocomplete="name" placeholder="Nome e sobrenome"></label>
       <fieldset class="radios">
         <legend>Você vai?*</legend>
         <label class="pill"><input type="radio" name="presenca" value="Sim" required> <span>Sim, estarei lá! 🎉</span></label>
         <label class="pill"><input type="radio" name="presenca" value="Não"> <span>Infelizmente não poderei</span></label>
       </fieldset>
       <div id="extrasSim">
-        <div class="grid-2">
-          <label>Acompanhantes<select name="acompanhantes" id="selAcomp"></select></label>
-          <label>Restrição alimentar<input name="restricao" placeholder="Ex.: vegetariano, alergia…"></label>
-        </div>
-        <label>Nome dos acompanhantes<input name="nomesAcompanhantes" placeholder="Separe por vírgula"></label>
+        <label>Quantos acompanhantes?<select name="acompanhantes" id="selAcomp"></select></label>
       </div>
-      <label>Mensagem para os noivos<textarea name="mensagem" rows="3"></textarea></label>
-      <button class="btn btn-wpp" type="submit">Confirmar pelo WhatsApp</button>
-      <p class="small">Ao enviar, abriremos o WhatsApp com sua confirmação já escrita, é só tocar em enviar.</p>
+      <button class="btn" type="submit">Confirmar presença</button>
       <p class="form-status" id="statusRSVP"></p>
     </form>
   </div>
@@ -165,8 +156,8 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-<script src="js/config.js?v=6"></script>
-<script src="js/pix.js?v=6"></script>
-<script src="js/app.js?v=6"></script>
+<script src="js/config.js?v=7"></script>
+<script src="js/pix.js?v=7"></script>
+<script src="js/app.js?v=7"></script>
 </body>
 </html>
