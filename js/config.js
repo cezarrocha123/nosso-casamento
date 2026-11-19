@@ -48,7 +48,7 @@ window.CONFIG = {
   maxAcompanhantes: 4,
 
   // URL do Google Apps Script (veja o README). Sem ela, o formulário fica em modo de teste.
-  appsScriptUrl: "",
+  appsScriptUrl: "https://script.google.com/macros/s/AKfycbwwvB2Ef_PzOPOL0GWMsTtVM4EQ9QPMcNW-V7pEfYixK7LkoMDLzD3rbWZfmJqZzUgS/exec",
 
   /* ---------- PIX (presentes caem direto na sua conta, sem taxa) ---------- */
   pix: {
