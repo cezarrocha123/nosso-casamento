@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nosso Casamento</title>
+  <meta name="description" content="Site do nosso casamento — confirme sua presença!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a href="#inicio" class="nav-logo" id="navLogo"></a>
+  <button class="nav-toggle" id="navToggle" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+  <nav class="nav-links" id="navLinks">
+    <a href="#historia">Nossa história</a>
+    <a href="#evento">O grande dia</a>
+    <a href="#rsvp">Confirmar presença</a>
+    <a href="#presentes">Presentes</a>
+    <a href="#recados">Recados</a>
+  </nav>
+</header>
+
+<section class="hero" id="inicio">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-pre">Vamos nos casar</p>
+    <h1 class="hero-names" id="heroNames"></h1>
+    <div class="hero-divider"><span></span><i>✦</i><span></span></div>
+    <p class="hero-date" id="heroDate"></p>
+    <p class="hero-city" id="heroCity"></p>
+    <div class="countdown" id="countdown">
+      <div><b id="cdD">0</b><small>dias</small></div>
+      <div><b id="cdH">0</b><small>horas</small></div>
+      <div><b id="cdM">0</b><small>min</small></div>
+      <div><b id="cdS">0</b><small>seg</small></div>
+    </div>
+    <a href="#rsvp" class="btn btn-light">Confirmar presença</a>
+  </div>
+</section>
+
+<section class="section" id="historia">
+  <div class="container narrow">
+    <p class="eyebrow">Um pouco sobre nós</p>
+    <h2>Nossa história</h2>
+    <p class="lead" id="frase"></p>
+    <div id="historiaTexto" class="historia"></div>
+  </div>
+</section>
+
+<section class="section alt" id="evento">
+  <div class="container">
+    <p class="eyebrow">Anote na agenda</p>
+    <h2>O grande dia</h2>
+    <div class="cards-2" id="locais"></div>
+
+    <div class="cards-2 mt">
+      <div class="card info">
+        <h3>Dress code</h3>
+        <p class="destaque" id="dressTitulo"></p>
+        <p id="dressTexto"></p>
+      </div>
+      <div class="card info">
+        <h3>Hospedagem</h3>
+        <ul class="lista-hotel" id="hospedagem"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="rsvp">
+  <div class="container narrow">
+    <p class="eyebrow">Contamos com você</p>
+    <h2>Confirme sua presença</h2>
+    <p class="lead">Por favor, confirme até <b id="prazo"></b>.</p>
+
+    <form class="form card" id="formRSVP" novalidate>
+      <div class="grid-2">
+        <label>Nome completo*<input name="nome" required autocomplete="name"></label>
+        <label>WhatsApp*<input name="telefone" required inputmode="tel" placeholder="(84) 9 0000-0000" autocomplete="tel"></label>
+      </div>
+      <fieldset class="radios">
+        <legend>Você vai?*</legend>
+        <label class="pill"><input type="radio" name="presenca" value="Sim" required> <span>Sim, estarei lá! 🎉</span></label>
+        <label class="pill"><input type="radio" name="presenca" value="Não"> <span>Infelizmente não poderei</span></label>
+      </fieldset>
+      <div id="extrasSim">
+        <div class="grid-2">
+          <label>Acompanhantes<select name="acompanhantes" id="selAcomp"></select></label>
+          <label>Restrição alimentar<input name="restricao" placeholder="Ex.: vegetariano, alergia…"></label>
+        </div>
+        <label>Nome dos acompanhantes<input name="nomesAcompanhantes" placeholder="Separe por vírgula"></label>
+      </div>
+      <label>Mensagem para os noivos<textarea name="mensagem" rows="3"></textarea></label>
+      <button class="btn" type="submit">Enviar confirmação</button>
+      <p class="form-status" id="statusRSVP"></p>
+    </form>
+  </div>
+</section>
+
+<section class="section alt" id="presentes">
+  <div class="container">
+    <p class="eyebrow">Com carinho</p>
+    <h2>Lista de presentes</h2>
+    <p class="lead">Escolha um presente e pague via PIX. O valor cai direto para os noivos.</p>
+    <div class="gifts" id="gifts"></div>
+    <div class="gift-livre card">
+      <div>
+        <h3>Prefere escolher o valor?</h3>
+        <p>Mande qualquer quantia via PIX.</p>
+      </div>
+      <form id="formLivre" class="livre-form">
+        <span>R$</span><input type="number" min="1" step="0.01" id="valorLivre" placeholder="100,00" required>
+        <button class="btn" type="submit">Presentear</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="recados">
+  <div class="container narrow">
+    <p class="eyebrow">Deixe seu carinho</p>
+    <h2>Mural de recados</h2>
+    <form class="form card" id="formRecado">
+      <label>Seu nome*<input name="nome" required></label>
+      <label>Recado*<textarea name="mensagem" rows="3" required></textarea></label>
+      <button class="btn" type="submit">Publicar recado</button>
+      <p class="form-status" id="statusRecado"></p>
+    </form>
+    <div class="mural" id="mural"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p class="footer-names" id="footerNames"></p>
+  <p id="footerDate"></p>
+</footer>
+
+<!-- Modal PIX -->
+<div class="modal" id="modalPix" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="pixTitulo">
+    <button class="modal-close" id="fecharPix" aria-label="Fechar">×</button>
+    <p class="eyebrow">Presente</p>
+    <h3 id="pixTitulo"></h3>
+    <p class="pix-valor" id="pixValor"></p>
+    <div class="qr" id="pixQR"></div>
+    <p class="small">Abra o app do seu banco, escolha <b>PIX › Ler QR Code</b> ou use o código abaixo.</p>
+    <div class="copia">
+      <input id="pixCodigo" readonly>
+      <button class="btn btn-sm" id="copiarPix">Copiar</button>
+    </div>
+    <details class="avisar">
+      <summary>Quer deixar seu nome junto do presente?</summary>
+      <form id="formPresente">
+        <input name="nome" placeholder="Seu nome" required>
+        <textarea name="mensagem" rows="2" placeholder="Mensagem (opcional)"></textarea>
+        <button class="btn btn-sm" type="submit">Enviar aos noivos</button>
+        <p class="form-status" id="statusPresente"></p>
+      </form>
+    </details>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/pix.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

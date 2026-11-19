@@ -1,0 +1,64 @@
+/* =========================================================
+   CONFIGURAÇÃO DO SITE — edite só este arquivo
+   ========================================================= */
+window.CONFIG = {
+  noivo1: "Noivo",
+  noivo2: "Noiva",
+  // Data e hora da cerimônia (formato AAAA-MM-DDTHH:MM, horário local)
+  data: "2027-05-15T16:00",
+  cidade: "Natal / RN",
+  // Foto de capa (coloque o arquivo na pasta img/). Deixe "" para usar o fundo padrão.
+  fotoCapa: "",
+
+  frase: "Vamos nos casar e queremos você com a gente nesse dia!",
+
+  historia: [
+    "Escreva aqui como vocês se conheceram.",
+    "Pode ter mais de um parágrafo — cada item da lista vira um parágrafo."
+  ],
+
+  cerimonia: {
+    nome: "Igreja Exemplo",
+    horario: "16h00",
+    endereco: "Rua Exemplo, 123 — Bairro, Natal/RN",
+  },
+  festa: {
+    nome: "Espaço de Eventos Exemplo",
+    horario: "18h00",
+    endereco: "Av. Exemplo, 456 — Bairro, Natal/RN",
+  },
+
+  dressCode: {
+    titulo: "Esporte fino",
+    texto: "Sugerimos tons claros e tecidos leves. Por favor, evite branco 🙂",
+  },
+
+  hospedagem: [
+    { nome: "Hotel Exemplo", detalhe: "A 5 min da festa", link: "" },
+  ],
+
+  // Prazo para confirmar presença (texto livre)
+  prazoRSVP: "15 de abril de 2027",
+  maxAcompanhantes: 4,
+
+  // URL do Google Apps Script (veja o README). Sem ela, o formulário fica em modo de teste.
+  appsScriptUrl: "",
+
+  /* ---------- PIX (presentes caem direto na sua conta, sem taxa) ---------- */
+  pix: {
+    chave: "seu-email@exemplo.com",   // CPF, e-mail, telefone (+5584...) ou chave aleatória
+    nomeRecebedor: "NOME SOBRENOME",  // como aparece no banco (até 25 letras)
+    cidade: "NATAL",
+  },
+
+  presentes: [
+    { nome: "Jantar romântico na lua de mel", valor: 250 },
+    { nome: "Passeio de barco", valor: 400 },
+    { nome: "Jogo de panelas", valor: 350 },
+    { nome: "Cafeteira", valor: 280 },
+    { nome: "Jogo de cama", valor: 200 },
+    { nome: "Ajuda com a passagem", valor: 600 },
+    { nome: "Cota de lua de mel", valor: 150 },
+    { nome: "Aspirador robô", valor: 900 },
+  ],
+};
