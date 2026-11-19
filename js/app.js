@@ -22,7 +22,7 @@
 
   /* ---------- Locais ---------- */
   const local = (titulo, l) => {
-    const q = encodeURIComponent(l.endereco);
+    const q = encodeURIComponent(l.mapa || l.endereco);
     return `<div class="card local">
       <h3>${titulo}</h3>
       <p class="destaque">${esc(l.nome)}</p>

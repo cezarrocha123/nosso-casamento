@@ -18,9 +18,11 @@ window.CONFIG = {
   ],
 
   cerimonia: {
-    nome: "Igreja Exemplo",
+    nome: "Paróquia São Francisco de Assis",
     horario: "16h00",
-    endereco: "Rua Exemplo, 123 — Bairro, Natal/RN",
+    endereco: "R. Maracanã, s/n — Pitimbu, Natal/RN",
+    // Busca usada nos botões de Google Maps e Waze
+    mapa: "Paróquia São Francisco de Assis, R. Maracanã, Pitimbu, Natal - RN",
   },
   festa: {
     nome: "Espaço de Eventos Exemplo",
