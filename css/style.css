@@ -38,7 +38,7 @@ img { max-width: 100%; display: block; }
 .hero::before, .hero::after { content: ""; position: absolute; width: min(34vw, 340px); aspect-ratio: 2/3; background: url("../img/eucalipto-claro.svg") center/contain no-repeat; opacity: .55; pointer-events: none; }
 .hero::before { left: -40px; bottom: -30px; }
 .hero::after { right: -40px; top: 40px; transform: rotate(180deg); }
-.hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(40,55,90,.05), rgba(40,55,90,.25)); border: 1px solid rgba(217,191,134,.55); inset: 22px; pointer-events: none; }
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(40,55,90,.05), rgba(40,55,90,.25)); pointer-events: none; }
 .hero-content { position: relative; max-width: 760px; }
 .hero-content > * { position: relative; }
 .hero-pre { letter-spacing: .4em; text-transform: uppercase; font-size: .75rem; font-weight: 500; }
@@ -176,7 +176,6 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--verde); out
   .historia p { font-size: 1.18rem; }
   #historia::before, #rsvp::before { width: 90px; opacity: .35; }
   .hero::before, .hero::after { width: 46vw; opacity: .4; }
-  .hero-overlay { inset: 12px; }
   .nav-toggle { display: block; }
   .nav-links { position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--creme); max-height: 0; overflow: hidden; transition: max-height .3s; }
   .nav.open .nav-links { max-height: 320px; box-shadow: 0 8px 20px rgba(0,0,0,.08); }
