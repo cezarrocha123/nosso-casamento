@@ -17,7 +17,7 @@ window.CONFIG = {
   historia: [
     "Nos conhecemos na Comunidade Católica Shalom e, de maneira muito tranquila e rápida, construímos uma amizade leve, com muitas partilhas no dia a dia e conhecendo um ao outro.",
     "Foi no desejo crescente de cuidar um do outro que floresceu um amor tranquilo, firmado na vida de oração. E é com esse mesmo desejo, que gera paz e felicidade, que caminhamos rumo ao altar.",
-    "Por isso, queremos contar com a sua presença, que é indispensável neste momento tão especial para nós.",
+    "Por isso queremos contar com a sua presença, que é indispensável neste momento tão especial para nós.",
   ],
   // Foto da seção "Nossa história" (pasta img/). Deixe "" para não mostrar.
   historiaFoto: "img/nossa-historia.jpg",
