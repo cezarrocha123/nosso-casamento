@@ -79,6 +79,12 @@ h2::after { content: "✦"; display: block; width: 150px; margin: 10px auto 0; c
 h3 { font-family: var(--caps); font-weight: 500; font-size: 1.15rem; letter-spacing: .14em; text-transform: uppercase; color: var(--verde-esc); }
 .lead { color: var(--suave); font-size: 1.02rem; margin-bottom: 30px; }
 .historia p { font-family: var(--serif); font-size: 1.3rem; margin-bottom: 16px; }
+.historia-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: center; text-align: left; max-width: 980px; margin: 0 auto; }
+.historia-grid .historia p:first-letter { }
+.historia-grid .historia p:first-child::first-letter { font-family: var(--script); font-size: 3.4rem; color: var(--dourado); float: left; line-height: .8; padding: 8px 8px 0 0; }
+.historia-foto { position: relative; margin: 0; isolation: isolate; }
+.historia-foto img { width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: center 35%; border-radius: 2px; box-shadow: 0 18px 40px rgba(52,69,107,.18); }
+.historia-foto::before { content: ""; position: absolute; inset: 14px -14px -14px 14px; border: 1px solid var(--dourado); opacity: .6; z-index: -1; }
 .mt { margin-top: 24px; }
 
 .card { background: #fff; border: 1px solid var(--borda); border-radius: 2px; padding: 34px 28px; box-shadow: inset 0 0 0 6px #fff, inset 0 0 0 7px rgba(184,151,90,.35); }
@@ -164,6 +170,10 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--verde); out
   .nav-links a { color: var(--verde-esc); padding: 14px 5vw; border-top: 1px solid var(--borda); }
 }
 @media (max-width: 760px) {
+  .historia-grid { grid-template-columns: 1fr; gap: 36px; text-align: center; }
+  .historia-grid .historia p:first-child::first-letter { float: none; font-size: inherit; color: inherit; font-family: inherit; padding: 0; }
+  .historia-foto { max-width: 340px; margin: 0 auto; }
+  .historia p { font-size: 1.18rem; }
   #historia::before, #rsvp::before { width: 90px; opacity: .35; }
   .hero::before, .hero::after { width: 46vw; opacity: .4; }
   .hero-overlay { inset: 12px; }

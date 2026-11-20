@@ -12,12 +12,15 @@ window.CONFIG = {
   // Foto de capa (coloque o arquivo na pasta img/). Deixe "" para usar o fundo padrão.
   fotoCapa: "",
 
-  frase: "Vamos nos casar e queremos você com a gente nesse dia!",
+  frase: "",
 
   historia: [
-    "Escreva aqui como vocês se conheceram.",
-    "Pode ter mais de um parágrafo — cada item da lista vira um parágrafo."
+    "Nos conhecemos na Comunidade Católica Shalom e de maneira muito tranquila e rápida construímos uma amizade leve, com muitas partilhas no dia a dia e conhecimento um do outro.",
+    "Foi crescendo no desejo de cuidar um do outro que foi fluindo um amor tranquilo e baseado na vida de oração, e é com esse mesmo desejo, que gera paz e felicidade, que caminhamos rumo ao altar.",
+    "Por isso queremos contar com a sua presença, que é essencial nesse momento tão especial para nós.",
   ],
+  // Foto da seção "Nossa história" (pasta img/). Deixe "" para não mostrar.
+  historiaFoto: "img/nossa-historia.jpg",
 
   cerimonia: {
     nome: "Paróquia São Francisco de Assis",

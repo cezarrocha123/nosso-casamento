@@ -15,7 +15,10 @@
   $("#heroDate").textContent = dataTxt;
   $("#footerDate").textContent = `${dataTxt} · ${C.cidade}`;
   $("#heroCity").textContent = C.cidade;
-  $("#frase").textContent = C.frase;
+  if (C.frase) $("#frase").textContent = C.frase; else $("#frase").remove();
+  if (C.historiaFoto) {
+    $("#historiaFoto").innerHTML = `<img src="${esc(C.historiaFoto)}" alt="${esc(C.noivo1)} e ${esc(C.noivo2)}" loading="lazy">`;
+  } else $("#historiaFoto").remove();
   $("#historiaTexto").innerHTML = C.historia.map((p) => `<p>${esc(p)}</p>`).join("");
   $("#prazo").textContent = C.prazoRSVP;
   if (C.fotoCapa) $("#inicio").style.backgroundImage = `url('${C.fotoCapa}')`;
